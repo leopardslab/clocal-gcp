@@ -1,6 +1,6 @@
-import commander from 'commander';
-import chalk from 'chalk';
-import CloudFunction from './services/cloud-functions/cloud-function';
+const commander = require('commander');
+const chalk = require('chalk');
+const CloudFunction = require('./services/cloud-functions/cloud-function');
 
 const functions = new CloudFunction();
 

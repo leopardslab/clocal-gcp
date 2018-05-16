@@ -1,7 +1,4 @@
-import express from 'express';
-import { Express } from 'express';
-import { Server } from 'http';
-import CloudLocal from '../gcp/cloud-local';
+const CloudLocal = require('../gcp/cloud-local');
 
 class CloudFunction extends CloudLocal {
   init() {
@@ -12,4 +9,4 @@ class CloudFunction extends CloudLocal {
   }
 }
 
-export default CloudFunction;
+module.exports = CloudFunction;
