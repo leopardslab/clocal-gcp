@@ -1,3 +1,5 @@
+'use strict';
+
 const CloudLocal = require('../gcp/cloud-local');
 
 class CloudFunction extends CloudLocal {
