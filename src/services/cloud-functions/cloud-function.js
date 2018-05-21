@@ -5,6 +5,7 @@ const path = require('path');
 const Configstore = require('configstore');
 const got = require('got');
 const url = require('url');
+const bodyParser = require('body-parser');
 const pkg = require('../../../package.json');
 
 const API_VERSION = 'v1';
@@ -14,6 +15,26 @@ class CloudFunction extends CloudLocal {
   init() {
     this.port = 7574;
     this._discovery = new Configstore(path.join(pkg.name, '/.discovery'));
+
+    this.server.put(`/upload`, (req, res, next) =>
+      this.handleUpload(req, res).catch(next)
+    );
+
+    this.app.use(bodyParser.json());
+    this.app.use(bodyParser.raw());
+    this.app.use(bodyParser.text());
+    this.app.use(
+      bodyParser.urlencoded({
+        extended: true,
+      })
+    );
+
+    this.app.use((req, res, next) => {
+      res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+      res.set('Pragma', 'no-cache');
+      res.set('Expires', 0);
+      next();
+    });
 
     this.app.get(`/([$])discovery/rest`, (req, res, next) =>
       this.getDiscoveryDoc(req, res).catch(next)
@@ -64,6 +85,18 @@ class CloudFunction extends CloudLocal {
           .json(doc)
           .end();
       });
+  }
+
+  handleUpload(req, res) {
+    return new Promise((resolve, reject) => {
+      req
+        .pipe(fs.createWriteStream(req.query.archive))
+        .on('error', reject)
+        .on('finish', () => {
+          res.end();
+          resolve();
+        });
+    });
   }
 }
 
