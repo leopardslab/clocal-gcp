@@ -16,7 +16,7 @@ class CloudFunction extends CloudLocal {
     this.port = 7574;
     this._discovery = new Configstore(path.join(pkg.name, '/.discovery'));
 
-    this.server.put(`/upload`, (req, res, next) =>
+    this.app.put(`/upload`, (req, res, next) =>
       this.handleUpload(req, res).catch(next)
     );
 
@@ -25,7 +25,7 @@ class CloudFunction extends CloudLocal {
     this.app.use(bodyParser.text());
     this.app.use(
       bodyParser.urlencoded({
-        extended: true,
+        extended: true
       })
     );
 
@@ -54,8 +54,8 @@ class CloudFunction extends CloudLocal {
         }
         return got(DISCOVERY_URL, {
           query: {
-            version: req.query.version,
-          },
+            version: req.query.version
+          }
         })
           .then(response => {
             const doc = JSON.parse(response.body);
@@ -78,7 +78,7 @@ class CloudFunction extends CloudLocal {
           url.format({
             hostname: 'localhost',
             port: this.port,
-            protocol: `${req.protocol}:`,
+            protocol: `${req.protocol}:`
           }) + '/';
         res
           .status(200)
