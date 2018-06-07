@@ -1,0 +1,9 @@
+{
+  "name": "projects/test/locations/us-central1/functions/helloWorld2",
+  "timeout": { "seconds": 60 },
+  "sourceUploadUrl":
+    "http://localhost:8008/upload?archive=%2Ftmp%2Ftmp-4828U65t4iGRbYoX.zip&localdir=%2Fhome%2Fdilantha%2Fsource%2Fgsoc%2Flearning%2Ffunction-emulator%2Fhelloworld2",
+  "sourceArchiveUrl": "file:///tmp/tmp-4828U65t4iGRbYoX.zip",
+  "httpsTrigger": {},
+  "localPath": ""
+}

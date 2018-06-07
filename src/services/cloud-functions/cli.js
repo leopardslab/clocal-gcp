@@ -3,9 +3,9 @@
 'use strict';
 
 const chalk = require('chalk');
-const CloudFunction = require('./cloud-function');
+const RestService = require('./rest-service');
 
-const functions = new CloudFunction();
+const functions = new RestService();
 
 const action = () => {
   try {
