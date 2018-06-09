@@ -4,8 +4,15 @@
 
 const chalk = require('chalk');
 const RestService = require('./rest-service');
+const Model = require('./model');
 
-const functions = new RestService();
+const functions = new RestService(
+  Model.functions({
+    storage: 'configstore',
+    host: 'localhost',
+    supervisorPort: 8010,
+  })
+);
 
 const action = () => {
   try {

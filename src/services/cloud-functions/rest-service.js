@@ -8,6 +8,7 @@ const url = require('url');
 const bodyParser = require('body-parser');
 const pkg = require('../../../package.json');
 const Model = require('./model');
+const Errors = require('./utils/errors');
 
 const { CloudFunction, Operation } = Model;
 
@@ -15,12 +16,12 @@ const API_VERSION = 'v1';
 const DISCOVERY_URL = `https://cloudfunctions.googleapis.com/$discovery/rest?version=${API_VERSION}`;
 
 class RestService extends CloudLocal {
+  constructor(config = {}) {
+    super();
+    this.functions = config;
+  }
+
   init() {
-    this.functions = Model.functions({
-      storage: 'configstore',
-      host: 'localhost',
-      supervisorPort: 8010,
-    });
     this.port = 7574;
     this._discovery = new Configstore(path.join(pkg.name, '/.discovery'));
 
@@ -61,28 +62,14 @@ class RestService extends CloudLocal {
         (req, res, next) => this.generateUploadUrl(req, res).catch(next)
       )
       .post(
-        `/${API_VERSION}/projects/:project/locations/:location/functions/:name::call`,
-        (req, res, next) => this.callFunction(req, res).catch(next)
-      )
-      .post(
         `/${API_VERSION}/projects/:project/locations/:location/functions`,
         (req, res, next) => this.createFunction(req, res).catch(next)
-      )
-      .get(`/${API_VERSION}/operations/:operation`, (req, res, next) =>
-        this.getOperation(req, res).catch(next)
       )
       .all('*', (req, res, next) => {
         next({ code: Errors.status.NOT_FOUND });
       });
 
-    this.app.use((err, req, res, next) => {
-      res
-        .status(200)
-        .json({
-          test: `${err}`,
-        })
-        .end();
-    });
+    this.app.use((err, req, res, next) => Errors.sendRestError(err, res));
   }
 
   getDiscoveryDoc(req, res) {
