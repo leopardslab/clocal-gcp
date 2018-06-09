@@ -1,7 +1,6 @@
 'use strict';
 
 const proxyquire = require('proxyquire').noPreserveCache();
-const nock = require('nock');
 const request = require('supertest');
 
 import test, { beforeEach, afterEach } from 'ava';
@@ -13,10 +12,6 @@ beforeEach(() => {
     '../../../src/services/cloud-functions/rest-service',
     {}
   );
-});
-
-afterEach(() => {
-  nock.cleanAll();
 });
 
 test('discovery document', async t => {
