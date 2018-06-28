@@ -13,6 +13,6 @@ gcs.interceptors.push({
 });
 
 gcs
-  .createBucket('dilantha-test-bucket')
+  .createBucket('dilantha-mock-test-bucket')
   .then(res => console.log(res))
   .catch(err => console.log(err));
