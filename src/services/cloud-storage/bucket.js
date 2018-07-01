@@ -5,7 +5,7 @@ const BucketConfigStore = require('./bucket-config-store');
 
 class Bucket {
   constructor() {
-    const storageLocationPath = `${homedir}/.clocal-gcp/storage`;
+    const storageLocationPath = `/.clocal-gcp/storage`;
     if (!fs.existsSync(storageLocationPath)) {
       execSync(`mkdir -p ${storageLocationPath}`);
     }

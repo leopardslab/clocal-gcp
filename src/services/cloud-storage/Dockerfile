@@ -12,6 +12,8 @@ RUN yarn
 # Bundle app source
 COPY . .
 
+VOLUME /.clocal-gcp
+
 EXPOSE 8080
 
 CMD [ "npm", "start" ]
