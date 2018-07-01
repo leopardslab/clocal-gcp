@@ -1,0 +1,16 @@
+{
+  "name": "cloud-storage",
+  "version": "1.0.0",
+  "description": "",
+  "main": "run.js",
+  "scripts": {
+    "start": "node run.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "dilantha111",
+  "license": "ISC",
+  "dependencies": {
+    "configstore": "^3.1.2",
+    "express": "^4.16.3"
+  }
+}

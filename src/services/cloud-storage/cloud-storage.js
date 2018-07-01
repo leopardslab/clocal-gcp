@@ -1,17 +1,19 @@
 'use strict';
 
-const CloudLocal = require('../gcp/cloud-local');
+const CloudLocal = require('./cloud-local');
 const bodyParser = require('body-parser');
 const Bucket = require('./bucket');
 
 class CloudStorage extends CloudLocal {
   init() {
     // TODO : change this port and pass through config
-    this.port = 8000;
+    this.port = 8080;
     this.app.use(bodyParser.json());
     this.app.use(bodyParser.raw());
     this.app.use(bodyParser.text());
-    this.app.post(`/storage/v1/b`, this._insert);
+    this.app.post(`/storage/v1/b`, this._insert).get(`/test`, (req, res) => {
+      res.send('hello world');
+    });
   }
 
   _insert(req, res) {

@@ -1,5 +1,5 @@
 const Configstore = require('configstore');
-const pkg = require('../../../package.json');
+const pkg = require('./package.json');
 const path = require('path');
 
 class BucketConfigStore {
