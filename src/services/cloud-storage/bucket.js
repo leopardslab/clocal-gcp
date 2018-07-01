@@ -1,6 +1,5 @@
 const fs = require('fs');
 const { execSync } = require('child_process');
-const homedir = require('os').homedir();
 const BucketConfigStore = require('./bucket-config-store');
 
 class Bucket {
