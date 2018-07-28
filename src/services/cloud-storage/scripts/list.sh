@@ -1,0 +1,1 @@
+node ./scripts/list.js "$1"

@@ -1,0 +1,1 @@
+node ./scripts/rm.js "$1" "$2"
