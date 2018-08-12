@@ -16,6 +16,10 @@ class Bucket {
     this._bucketObjects = new BucketObjectsConfigStore();
   }
 
+  getObjectLocation(fileName, bucketName) {
+    return `${this.storageLocation}/${bucketName}/${fileName}`;
+  }
+
   uploadObject(path, fileName, bucketName) {
     try {
       const bucketConfig = this._bucketConfigStore.getBucket(bucketName);
@@ -231,6 +235,7 @@ class Bucket {
     object.updated = updateTime;
     object.id = objectName;
     object.name = objectName;
+    object.selfLink = `http://localhost:8000/host/${bucketName}/${objectName}`;
     return object;
   }
 }
