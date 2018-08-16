@@ -21,8 +21,9 @@ RUN yarn
 
 COPY . . 
 
-EXPOSE 3011
+EXPOSE 7070
 
 EXPOSE 6379
 
-CMD concurrently "/usr/bin/redis-server --bind '0.0.0.0'" "sleep 5s; node /usr/src/app/src/run.js"
+# CMD concurrently "/usr/bin/redis-server --bind '0.0.0.0'" "sleep 5s; node /usr/src/app/run.js"
+CMD [ "npm", "start" ]
