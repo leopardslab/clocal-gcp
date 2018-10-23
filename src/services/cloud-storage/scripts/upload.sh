@@ -1,0 +1,1 @@
+node ./scripts/upload.js "$1" "$2" "$3"

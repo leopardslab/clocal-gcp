@@ -1,0 +1,1 @@
+node ./scripts/delete.js "$1"

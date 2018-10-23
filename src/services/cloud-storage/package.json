@@ -1,0 +1,20 @@
+{
+  "name": "cloud-storage",
+  "version": "1.0.0",
+  "description": "",
+  "main": "run.js",
+  "scripts": {
+    "start": "node run.js",
+    "test": "ava"
+  },
+  "author": "dilantha111",
+  "license": "ISC",
+  "dependencies": {
+    "configstore": "^3.1.2",
+    "express": "^4.16.3",
+    "formidable": "^1.2.1"
+  },
+  "devDependencies": {
+    "ava": "1.0.0-beta.6"
+  }
+}
