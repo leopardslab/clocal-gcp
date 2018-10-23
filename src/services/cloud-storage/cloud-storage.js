@@ -5,6 +5,7 @@ const formidable = require('formidable');
 const CloudLocal = require('./cloud-local');
 const bodyParser = require('body-parser');
 const Bucket = require('./bucket');
+const express = require('express');
 
 class CloudStorage extends CloudLocal {
   init() {
@@ -18,7 +19,16 @@ class CloudStorage extends CloudLocal {
       .get(`/storage/v1/b`, this._listBuckets)
       .get(`/storage/v1/b/:bucketName`, this._getBucket)
       .delete(`/storage/v1/b/:bucketName`, this._deleteBucket)
-      .post(`/upload/storage/v1/b/:bucketName/:o`, this._uploadObject);
+      .post(`/upload/storage/v1/b/:bucketName/:o`, this._uploadObject)
+      .get(`/host/:bucketName/:objectName`, this._viewObjecet);
+  }
+
+  _viewObjecet(req, res) {
+    const bucketName = req.params.bucketName;
+    const objectName = req.params.objectName;
+    const _bucket = new Bucket();
+    const objectPath = _bucket.getObjectLocation(objectName, bucketName);
+    res.sendFile(objectPath);
   }
 
   _uploadObject(req, res) {

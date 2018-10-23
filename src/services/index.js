@@ -1,9 +1,9 @@
 'use strict';
 
-const cloudFunctions = require('./cloud-functions/cli');
+const cloudFunctioncmd = require('./cli-commands/cloud-function/cmd');
 const cloudStoragecmd = require('./cli-commands/cloud-storage/cmd');
 
-const commandsArray = [cloudFunctions, cloudStoragecmd];
+const commandsArray = [cloudFunctioncmd, cloudStoragecmd];
 
 module.exports = {
   commands: commandsArray,

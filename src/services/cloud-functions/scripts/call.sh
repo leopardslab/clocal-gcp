@@ -1,0 +1,1 @@
+functions call "$1"
