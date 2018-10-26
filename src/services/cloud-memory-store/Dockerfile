@@ -25,5 +25,4 @@ EXPOSE 7070
 
 EXPOSE 6379
 
-# CMD concurrently "/usr/bin/redis-server --bind '0.0.0.0'" "sleep 5s; node /usr/src/app/run.js"
 CMD [ "npm", "start" ]
