@@ -1,6 +1,5 @@
 FROM node:6.11-slim
 
-# Create app directory
 WORKDIR /usr/src/app
 
 RUN npm install -g @google-cloud/functions-emulator

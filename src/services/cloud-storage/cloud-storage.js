@@ -9,7 +9,7 @@ const express = require('express');
 
 class CloudStorage extends CloudLocal {
   init() {
-    // TODO : change this port and pass through config
+    
     this.port = 8080;
     this.app.use(bodyParser.json());
     this.app.use(bodyParser.raw());
