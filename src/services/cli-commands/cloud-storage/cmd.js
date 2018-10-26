@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+
 
 'use strict';
 
@@ -116,15 +116,11 @@ const copyObject = (srcPath, destPath) => {
     const config = new Configstore(path.join(pkg.name, '.containerList'));
     const dockerId = config.get('storage');
 
-    /**
-     * upload object
-     */
+   
     if (!_isBucketUrl(srcPath) && _isBucketUrl(destPath)) {
       _uploadObject(srcPath, dockerId, destPath);
     } else if (_isBucketUrl(srcPath) && _isBucketUrl(destPath)) {
-      /**
-       * copy an object between buckets
-       */
+      
       exec(
         `docker exec ${dockerId} bash scripts/cp.sh ${srcPath} ${destPath}`,
         (err, stdout, stderr) => {
@@ -133,9 +129,7 @@ const copyObject = (srcPath, destPath) => {
         }
       );
     } else if (_isBucketUrl(srcPath) && !_isBucketUrl(destPath)) {
-      /**
-       * download object from bucket
-       */
+      
       _downloadObject(srcPath, dockerId, destPath);
     }
   } catch (err) {
