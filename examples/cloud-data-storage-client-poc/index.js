@@ -1,4 +1,6 @@
-
+/**
+ * Before running this file make sure GOOGLE_APPLICATION_CREDENTIALS variable is set
+ */
 
 const Storage = require('@google-cloud/storage');
 const gcs = new Storage();
