@@ -21,7 +21,7 @@
   "bugs": {
     "url": "https://github.com/dilantha111/clocal-gcp/issues"
   },
-  "homepage": "https://github.com/dilantha111/clocal-gcp#readme",
+  "homepage": "https://github.com/cloudlibz/clocal-gcp/blob/master/README.md",
   "dependencies": {
     "chalk": "^2.4.1",
     "commander": "^2.15.1",
@@ -35,6 +35,5 @@
     "@types/node": "^8.0.0",
     "ava": "1.0.0-beta.6",
     "nodemon": "^1.17.3"
-  },
-  "homepage": "https://github.com/isman3/clocal-gcp/"
+  }
 }
