@@ -3,11 +3,15 @@
 'use strict';
 
 const program = require('commander');
-
-const commandsArray = require('../src/services/index').commands;
-
-program.version('1.0.0').description('Clocal GCP');
-
+var fs = require('fs');
+  var  commandsArray = [];
+let originpath = process.cwd() + "/src/services/cli-commands/";
+fs.readdir(originpath, function(err, items) {
+  const cloudFunctioncmd = require('../src/services/cli-commands/'+items[0]+'/cmd');
+  const cloudMemoryStore = require('../src/services/cli-commands/'+items[1]+'/cmd');
+  const cloudStoragecmd = require('../src/services/cli-commands/'+items[2]+'/cmd');
+ commandsArray = [cloudFunctioncmd, cloudStoragecmd, cloudMemoryStore];
+ program.version('1.0.0').description('Clocal GCP');
 const commandNameList = [];
 
 commandsArray.map(command => {
@@ -23,3 +27,4 @@ program.command('list').action(() => {
 });
 
 program.parse(process.argv);
+});
