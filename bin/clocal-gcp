@@ -1,18 +1,20 @@
 #!/usr/bin/env node
 
 'use strict';
+  let fs = require('fs');
+  const program = require('commander');
 
-const program = require('commander');
-var fs = require('fs');
-  var  commandsArray = [];
-let originpath = process.cwd() + "/src/services/cli-commands/";
+  let  commandsArray = [];
+  let originpath = process.cwd() + "/src/services/cli-commands/";
+  const commandNameList = [];
+
 fs.readdir(originpath, function(err, items) {
   const cloudFunctioncmd = require('../src/services/cli-commands/'+items[0]+'/cmd');
   const cloudMemoryStore = require('../src/services/cli-commands/'+items[1]+'/cmd');
   const cloudStoragecmd = require('../src/services/cli-commands/'+items[2]+'/cmd');
- commandsArray = [cloudFunctioncmd, cloudStoragecmd, cloudMemoryStore];
- program.version('1.0.0').description('Clocal GCP');
-const commandNameList = [];
+
+  commandsArray = [cloudFunctioncmd, cloudStoragecmd, cloudMemoryStore];
+  program.version('1.0.0').description('Clocal GCP');
 
 commandsArray.map(command => {
   commandNameList.push(command.commandName);
