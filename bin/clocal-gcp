@@ -9,18 +9,16 @@
   const commandNameList = [];
 
 fs.readdir(originpath, function(err, items) {
-  const cloudFunctioncmd = require('../src/services/cli-commands/'+items[0]+'/cmd');
-  const cloudMemoryStore = require('../src/services/cli-commands/'+items[1]+'/cmd');
-  const cloudStoragecmd = require('../src/services/cli-commands/'+items[2]+'/cmd');
-
-  commandsArray = [cloudFunctioncmd, cloudStoragecmd, cloudMemoryStore];
-  program.version('1.0.0').description('Clocal GCP');
+  for(var i = 0; i < items.length;i++){
+     const ServicesCmd = require('../src/services/cli-commands/'+items[i]+'/cmd');
+     commandsArray = [ServicesCmd];
+     program.version('1.0.0').description('Clocal GCP');
 
 commandsArray.map(command => {
   commandNameList.push(command.commandName);
   program.command(command.commandName).action(command.action);
 });
-
+}
 program.command('list').action(() => {
   const commandNames = commandNameList.reduce((prev, current) => {
     return `${prev}\n${current}`;
