@@ -2,24 +2,31 @@
 
 'use strict';
 
-const program = require('commander');
-
-const commandsArray = require('../src/services/index').commands;
+let commandsArray     =   [];
+const commandNameList =   [];
+const fs              =   require('fs');
+const program         =   require('commander');
+const main            =   process.cwd() + "/src/services/cli-commands/";
 
 program.version('1.0.0').description('Clocal GCP');
 
-const commandNameList = [];
+fs.readdir(main, function(err, total) {
+  for (var i=0; i<total.length; i++) {
+    const required = require('../src/services/cli-commands/'+total[i]+'/cmd');
+    commandsArray = [required];
+    commandsArray.map(command => {
+      commandNameList.push(command.commandName);
+      program.command(command.commandName).action(command.action);
+    });
+  } 
 
-commandsArray.map(command => {
-  commandNameList.push(command.commandName);
-  program.command(command.commandName).action(command.action);
+  program.command('list').action(() => {
+    const commandNames = commandNameList.reduce((prev, current) => {
+      return `${prev}\n${current}`;
+    }, '');
+    console.log(commandNameList.toString());
+  });
+
+  program.parse(process.argv);
+
 });
-
-program.command('list').action(() => {
-  const commandNames = commandNameList.reduce((prev, current) => {
-    return `${prev}\n${current}`;
-  }, '');
-  console.log(commandNameList.toString());
-});
-
-program.parse(process.argv);
