@@ -5,7 +5,6 @@ const formidable = require('formidable');
 const CloudLocal = require('./cloud-local');
 const bodyParser = require('body-parser');
 const Bucket = require('./bucket');
-const express = require('express');
 
 class CloudStorage extends CloudLocal {
   init() {
