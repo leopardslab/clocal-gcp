@@ -3,7 +3,6 @@
 const CloudLocal = require('./cloud-local');
 const bodyParser = require('body-parser');
 const MemoryStore = require('./memory-store');
-const express = require('express');
 
 class CloudMemoryStore extends CloudLocal {
   init() {
