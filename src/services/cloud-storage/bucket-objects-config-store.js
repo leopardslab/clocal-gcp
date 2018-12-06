@@ -17,8 +17,9 @@ class BucketObjectsConfigStore {
         objects: [{ path: objectPath, instance: objectInstance }],
       };
     } else {
-      if (this.getObject(bucketName, objectInstance.name))
+      if (this.getObject(bucketName, objectInstance.name)) {
         this.deleteObject(bucketName, objectInstance.name);
+      }
       bucketObjects.objects.push({
         path: objectPath,
         instance: objectInstance,
