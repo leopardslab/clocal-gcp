@@ -2,13 +2,20 @@
 
 'use strict';
 
+const fs = require('fs');
+const path = require('path');
 const program = require('commander');
 
-const commandsArray = require('../src/services/index').commands;
+const commandsArray = [];
+const commandNameList = [];
+const commandsDirectory = path.join(__dirname, '../src/services/cli-commands');
+
+const directories = fs.readdirSync(commandsDirectory);
+directories.forEach(dir => {
+  commandsArray.push(require(path.join(commandsDirectory, dir, '/cmd.js')));
+});
 
 program.version('1.0.0').description('Clocal GCP');
-
-const commandNameList = [];
 
 commandsArray.map(command => {
   commandNameList.push(command.commandName);
