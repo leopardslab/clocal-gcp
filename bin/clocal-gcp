@@ -1,16 +1,22 @@
+
 #!/usr/bin/env node
 
 'use strict';
 
 const program = require('commander');
-
+const FunctionalArray = require('../src/serviceCounter/API');
 const commandsArray = require('../src/services/index').commands;
 
 program.version('1.0.0').description('Clocal GCP');
 
-const commandNameList = [];
-
-commandsArray.map(command => {
+let length = items.length;
+for(var i=0;i<=length-1;++i){
+  const ServicesCmdBash = require('../src/services/cli-commands/'+items[i]+'/cmd');
+  commandsArray=[ServicesCmdBash];
+  program.version(<Version>).description('Clocal GCP');
+  
+  const commandNameList=[FunctionalArray];
+  commandsArray.map(command => {
   commandNameList.push(command.commandName);
   program.command(command.commandName).action(command.action);
 });
