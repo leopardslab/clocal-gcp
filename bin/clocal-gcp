@@ -8,12 +8,19 @@ const commandsArray = require('../src/services/index').commands;
 
 program.version('1.0.0').description('Clocal GCP');
 
-const commandNameList = [];
+class Dynamic extends Config.Plugin {
+  get hooks() { return {} }
+  get topics() {
+    return [{name: 'clocal-gcp'}]
+  }
+  get commandIDs() {
+    return clocal-gcpcommands.map((command: command) => command.clocal-gcp)
+  }
 
-commandsArray.map(command => {
-  commandNameList.push(command.commandName);
-  program.command(command.commandName).action(command.action);
-});
+  get commands(): Config.command.Plugin[] {
+    return clocal-gcpCommands
+  }
+}
 
 program.command('list').action(() => {
   const commandNames = commandNameList.reduce((prev, current) => {
