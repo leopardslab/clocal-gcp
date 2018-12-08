@@ -3,23 +3,28 @@
 'use strict';
 
 const program = require('commander');
+const fs = require('fs');
+const path = require('path');
+let length = items.length;
+
 const commandsArray =[];
-program.version('1.0.0').description('Clocal GCP');
+const commandNameList = [];
+const commandsDirectory = path.join(__dirname, '../src/services/cli-commands');
+
+program.version('1.0.0').description('Clocal GCP');  
 
 fs.readdir(originpath, function(err, items) {
-let length = items.length;
+
 for(var i = 0; i < length;i++){
   const ServicesCmdBash = require('../src/services/cli-commands/'+items[i]+'/cmd');
-  commandsArray = [ServicesCmdBash];
-  program.version('1.0.0').description('Clocal GCP');
+  const directories = fs.readdirSync(commandsDirectory);
   
-  const commandNameList = [];
   commandsArray.forEach(command => {
-  commandNameList.push(command.commandName);
-  program.command(command.commandName).action(command.action);
-});
+    commandNameList.push(command.commandName);
+    program.command(command.commandName).action(command.action);
+  });
 }
- 
+
 program.command('list').action(() => {
   const commandNames = commandNameList.reduce((prev, current) => {
     return `${prev}\n${current}`;
