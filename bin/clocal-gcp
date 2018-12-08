@@ -1,35 +1,32 @@
-#!/usr/bin/env node
+const fs              =   require('fs');
+const program         =   require('commander');
+const main            =   process.cwd() + "/src/services/cli-commands/";
+let commandsArray     =   [];
+const commandNameList =   [];
 
-'use strict';
+program.version('1.0.0').description('Clocal GCP');
 
-const program = require('commander');
-const fs = require('fs');
-const path = require('path');
-let length = items.length;
+fs.readdir(main, function(err, items) {
+  var totalImports = items.length  
+  while (i >= totalImports) {
 
-const commandsArray =[];
-const commandNameList = [];
-const commandsDirectory = path.join(__dirname, '../src/services/cli-commands');
-
-program.version('1.0.0').description('Clocal GCP');  
-
-fs.readdir(originpath, function(err, items) {
-
-for(var i = 0; i < length;i++){
-  const ServicesCmdBash = require('../src/services/cli-commands/'+items[i]+'/cmd');
-  const directories = fs.readdirSync(commandsDirectory);
+    const required = require('../src/services/cli-commands/'+items[i]+'/cmd');
+    commandsArray = [required];
+    
+    commandsArray.map(command => {
+      commandNameList.push(command.commandName);
+      program.command(command.commandName).action(command.action);
+    });
+    i++;
+  }
   
-  commandsArray.forEach(command => {
-    commandNameList.push(command.commandName);
-    program.command(command.commandName).action(command.action);
-  });
-}
-
-program.command('list').action(() => {
-  const commandNames = commandNameList.reduce((prev, current) => {
-    return `${prev}\n${current}`;
-  }, '');
+  program.command('list').action(() => {
+    const commandNames = commandNameList.reduce((prev, current) => {
+      return `${prev}\n${current}`;
+    }, '');
+    
   console.log(commandNameList.toString());
-});
-
-program.parse(process.argv);
+  });
+  
+  program.parse(process.argv);
+}); 
