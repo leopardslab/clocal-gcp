@@ -110,6 +110,13 @@ const deleteFunc = functionName => {
 };
 
 const start = () => {
+    console.log(chalk.cyan("\n"+
+"____ _    ____ ____ ____ _       ____ ____ ___  \n"+
+"|    |    |  | |    |  | |       |    |    |  | \n"+
+"|    |    |  | |    |__| |    __ | __ |    |__] \n"+
+"|___ |___ |__| |___ |  | |___    |__] |___ |    \n"+
+"                                                \n"
+));
   try {
     console.log(chalk.blueBright('starting gcp function ...'));
     const config = new Configstore(path.join(pkg.name, '.containerList'));
