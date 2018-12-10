@@ -33,7 +33,9 @@ const action = (cmd, first, second) => {
     case 'ls':
       listObjects(first);
       break;
-
+    case 'update':
+      updateObject(); 
+       break;
     default:
       console.log(`command invalid ${cmd} ${first} ${second}`);
   }
@@ -63,7 +65,20 @@ const _uploadObject = (srcPath, dockerId, destPath) => {
     );
   });
 };
-
+const updateObject = (bucketName) => {
+  try {
+    exec(
+      `docker exec ${dockerId} bash scripts/update.sh ${bucketName}`,
+      (err, stdout, stderr) => {
+        if (err) console.log(chalk.bgRed(`failed to execute\n${stderr}`));
+        console.log(`${stdout}`);
+      }
+    );
+    throw Error('not implemented yet');
+  } catch (err) {
+    return false;
+  }
+};
 const _downloadObject = (srcPath, dockerId, destPath) => {
   const bucketName = _getBucketName(srcPath);
   const fileName = path.parse(srcPath).base;
