@@ -24,6 +24,9 @@ const action = (cmd, first, second) => {
     case 'create':
       create(first);
       break;
+    case 'update':
+      updateObject(); 
+      break;
     case 'delete':
       deleteBucket(first);
       break;
@@ -33,7 +36,6 @@ const action = (cmd, first, second) => {
     case 'ls':
       listObjects(first);
       break;
-
     default:
       console.log(`command invalid ${cmd} ${first} ${second}`);
   }
@@ -92,6 +94,21 @@ const listObjects = (bucketName) => {
     );
   } catch (err) {
     console.log(chalk.blueBright.bgRed(err));
+  }
+};
+
+const updateObject = (bucketName) => {
+  try {
+    exec(
+      `docker exec ${dockerId} bash scripts/update.sh ${bucketName}`,
+      (err, stdout, stderr) => {
+        if (err) console.log(chalk.bgRed(`failed to execute\n${stderr}`));
+        console.log(`${stdout}`);
+      }
+    );
+    throw Error('incomplete implementation');
+  } catch (err) {
+      return false;
   }
 };
 
