@@ -9,7 +9,7 @@ const fs = require('fs');
 const Configstore = require('configstore');
 const path = require('path');
 const pkg = require('../../../../package.json');
-
+const common = require('../common/cmd');
 const dockerImage = `dilantha111/clocal-gcp-memory-store:0`;
 const defaultPort = 7070;
 
@@ -28,13 +28,7 @@ const action = (cmd, first, second) => {
 };
 
 const start = () => {
-    console.log(chalk.cyan("\n"+
-"____ _    ____ ____ ____ _       ____ ____ ___  \n"+
-"|    |    |  | |    |  | |       |    |    |  | \n"+
-"|    |    |  | |    |__| |    __ | __ |    |__] \n"+
-"|___ |___ |__| |___ |  | |___    |__] |___ |    \n"+
-"                                                \n"
-));  
+ console.log(common.figlet());
   try {
     console.log(chalk.blueBright('starting gcp memory store ...'));
     const config = new Configstore(path.join(pkg.name, '.containerList'));
