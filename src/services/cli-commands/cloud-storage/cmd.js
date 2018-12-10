@@ -65,6 +65,7 @@ const _uploadObject = (srcPath, dockerId, destPath) => {
     );
   });
 };
+
 const updateObject = (bucketName) => {
   try {
     exec(
@@ -79,6 +80,7 @@ const updateObject = (bucketName) => {
     return false;
   }
 };
+
 const _downloadObject = (srcPath, dockerId, destPath) => {
   const bucketName = _getBucketName(srcPath);
   const fileName = path.parse(srcPath).base;
