@@ -3,7 +3,7 @@
 'use strict';
 
 const chalk = require('chalk');
-function figlet(){
+const figlet = () => {
     return chalk.cyan("\n"+
     "____ _    ____ ____ ____ _       ____ ____ ___  \n"+
     "|    |    |  | |    |  | |       |    |    |  | \n"+
