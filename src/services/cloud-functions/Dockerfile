@@ -10,5 +10,3 @@ COPY scripts /usr/src/app/scripts
 RUN mkdir /functions
 
 COPY config.json /root/.config/configstore/@google-cloud/functions-emulator/config.json
-
-CMD ["functions", "start", "--tail"]

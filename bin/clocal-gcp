@@ -16,7 +16,15 @@ fs.readdir(originpath, function(err, items) {
 
 commandsArray.map(command => {
   commandNameList.push(command.commandName);
-  program.command(command.commandName).action(command.action);
+  if(command.option)
+    program
+      .command(command.commandName)
+      .action(command.action)
+      .option(command.option);
+  else
+    program
+      .command(command.commandName)
+      .action(command.action);
 });
 }
 program.command('list').action(() => {
