@@ -5,7 +5,7 @@ var options = {
   url:
     "http://localhost:7070/v1beta1/projects/testProject/locations/us-east-1/instances/redisTest123",
   headers: {
-    "Cache-Control': 'no-cache",
+    "Cache-Control": "no-cache",
   },
 };
 
