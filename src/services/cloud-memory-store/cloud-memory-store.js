@@ -1,8 +1,8 @@
-'use strict';
+"use strict";
 
-const CloudLocal = require('./cloud-local');
-const bodyParser = require('body-parser');
-const MemoryStore = require('./memory-store');
+const CloudLocal = require("./cloud-local");
+const bodyParser = require("body-parser");
+const MemoryStore = require("./memory-store");
 
 class CloudMemoryStore extends CloudLocal {
   init() {
@@ -33,9 +33,9 @@ class CloudMemoryStore extends CloudLocal {
         this._listInstances
       )
 
-      .all('*', (req, res) => {
+      .all("*", (req, res) => {
         console.log(req.url);
-        res.send('Endpoint not found');
+        res.send("Endpoint not found");
       });
   }
 
