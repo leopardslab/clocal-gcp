@@ -1,38 +1,39 @@
 #!/usr/bin/env node
 
 'use strict';
-  let fs = require('fs');
-  const program = require('commander');
 
-  let  commandsArray = [];
-  let originpath = process.cwd() + "/src/services/cli-commands/";
-  const commandNameList = [];
+let fs = require('fs');
+const program = require('commander');
 
-fs.readdir(originpath, function(err, items) {
-  for(var i = 0; i < items.length;i++){
-     const ServicesCmd = require('../src/services/cli-commands/'+items[i]+'/cmd');
-     commandsArray = [ServicesCmd];
-     program.version('1.0.0').description('Clocal GCP');
+let commandsArray = [];
+let originpath = process.cwd() + "/src/services/cli-commands/";
+const commandNameList = [];
 
-commandsArray.map(command => {
-  commandNameList.push(command.commandName);
-  if(command.option)
-    program
-      .command(command.commandName)
-      .action(command.action)
-      .option(command.option);
-  else
-    program
-      .command(command.commandName)
-      .action(command.action);
-});
-}
-program.command('list').action(() => {
-  const commandNames = commandNameList.reduce((prev, current) => {
-    return `${prev}\n${current}`;
-  }, '');
-  console.log(commandNameList.toString());
-});
+fs.readdir(originpath, function (err, items) {
+  for (var i = 0; i < items.length; i++) {
+    const ServicesCmd = require('../src/services/cli-commands/' + items[i] + '/cmd');
+    commandsArray = [ServicesCmd];
+    program.version('1.0.0').description('Clocal GCP');
 
-program.parse(process.argv);
+    commandsArray.map(command => {
+      commandNameList.push(command.commandName);
+      if (command.option)
+        program
+          .command(command.commandName)
+          .action(command.action)
+          .option(command.option);
+      else
+        program
+          .command(command.commandName)
+          .action(command.action);
+    });
+  }
+  program.command('list').action(() => {
+    const commandNames = commandNameList.reduce((prev, current) => {
+      return `${prev}\n${current}`;
+    }, '');
+    console.log(commandNameList.toString());
+  });
+
+  program.parse(process.argv);
 });

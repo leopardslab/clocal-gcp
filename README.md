@@ -8,7 +8,6 @@ Currently features are under development.
 
 ## 🚀 Install
 
-
 ```
 $ git clone https://github.com/cloudlibz/clocal-gcp.git
 
@@ -16,9 +15,38 @@ $ cd clocal-gcp
 
 $ yarn
 
-$ yarn dev <command>
+$ yarn start <command>
 ```
 
+## ⚽ Command List
+
+* ## clocal-gcp func
+    **start clocal-gcp function emulator**
+    * func start
+    * func stop
+    * func deploy
+    * func call
+    * func list
+    * func delete
+* ## clocal-gcp storage
+    **start clocal-gcp storage emulator**
+    * storage start
+    * storage stop
+    * storage create
+    * storage delete
+    * storage cp
+    * storage ls
+* ## clocal-gcp mem
+    **start clocal-gcp memcache emulator**
+    * mem start
+    * mem stop
+
+**In development replace clocal-gcp with 'npm start' or 'yarn start'**
+
+### Example command 
+    * clocal-gcp func start
+### Example command in development
+    * npm start func start
 
 # 📚 Overview
 
