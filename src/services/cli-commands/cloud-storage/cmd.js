@@ -10,7 +10,7 @@ const Configstore = require('configstore');
 const path = require('path');
 const pkg = require('../../../../package.json');
 const common = require('../common/cmd');
-const dockerImage = `dilantha111/clocal-gcp-storage:0`;
+const dockerImage = `cloudlibz/clocal-gcp-storage:latest`;
 const defaultPort = 8000;
 
 const action = (cmd, first, second) => {

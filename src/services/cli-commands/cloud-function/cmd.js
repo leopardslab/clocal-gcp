@@ -10,13 +10,13 @@ const Configstore = require('configstore');
 const path = require('path');
 const pkg = require('../../../../package.json');
 const common = require('../common/cmd');
-const dockerImage = `dilantha111/clocal-gcp-function:0`;
+const dockerImage = `cloudlibz/clocal-gcp-function:latest`;
 const defaultPort = 8000;
 
-const action = (cmd, first, second) => {
+const action = (cmd, first, second, command) => {
   switch (cmd) {
     case 'start':
-      start();
+      start(command);
       break;
     case 'stop':
       stop();
@@ -109,15 +109,25 @@ const deleteFunc = functionName => {
   }
 };
 
-const start = () => {
-   console.log(common.figlet());
+const start = (command) => {
+  console.log(common.figlet());
   try {
-    console.log(chalk.blueBright('starting gcp function ...'));
+    const port = command.port ? command.port : defaultPort;
+    console.log(chalk.blueBright(`Starting gcp function on port ${port}...`));
     const config = new Configstore(path.join(pkg.name, '.containerList'));
-    exec(`docker run -d ${dockerImage}`, (err, stdout, stderr) => {
+
+    exec(`docker run -p ${port}:${port} -t -d ${dockerImage}`, (err, stdout, stderr) => {
       if (err) console.log(chalk.bgRed(`failed to start\n${stderr}`));
       config.set('function', stdout.trim());
-      console.log(chalk.green.bgWhiteBright(`gcp function started ...`));
+      const dockerId = config.get('function');
+      exec(
+        `docker exec ${dockerId} bash scripts/start.sh ${port}`,
+        (err, stdout, stderr) => {
+          if (err) console.log(chalk.bgRed(`failed to execute\n${stderr}`));
+          console.log(stdout);
+          if (!err) console.log(chalk.green.bgWhiteBright(`gcp function started ...`));
+        }
+      ); 
     });
   } catch (err) {
     console.log(chalk.blueBright.bgRed(err));
@@ -160,4 +170,5 @@ const stop = () => {
 module.exports = {
   commandName: 'func <cmd> [first] [second]',
   action: action,
+  option: '--port <port>'
 };
