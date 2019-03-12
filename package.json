@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node bin/clocal-gcp",
     "dev": "nodemon bin/clocal-gcp",
+    "test": "ava ./src/**/*.spec.js",
     "test:coverage": "nyc ava ./src/**/*.spec.js",
     "test-watch": "ava --watch"
   },
