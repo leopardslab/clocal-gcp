@@ -33,7 +33,9 @@ const action = (cmd, first, second, command) => {
     case 'delete':
       deleteFunc(first);
       break;
-
+    case 'status':
+      status();
+      break;
     default:
       console.log(`command invalid ${cmd} ${first} ${second}`);
   }
@@ -162,6 +164,22 @@ const stop = () => {
         chalk.blueBright.bgRed('clocal gcp function is not running ...')
       );
     }
+  } catch (err) {
+    console.log(chalk.blueBright.bgRed(err));
+  }
+};
+
+const status = () => {
+  try {
+    const config = new Configstore(path.join(pkg.name, '.containerList'));
+    const dockerId = config.get('function');
+    exec(
+      `docker exec ${dockerId} bash scripts/status.sh`,
+      (err, stdout, stderr) => {
+        if (err) console.log(chalk.bgRed(`failed to execute\n${stderr}`));
+        console.log(stdout);
+      }
+    );
   } catch (err) {
     console.log(chalk.blueBright.bgRed(err));
   }
