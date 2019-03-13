@@ -1,5 +1,7 @@
 # clocal-gcp
 
+[![Build Status](https://travis-ci.com/cloudlibz/clocal-gcp.svg?branch=master)](https://travis-ci.com/shalithasuranga/clocal-gcp)
+
 Emulation engine for GCP
 
 clocal-gcp provides an easy-to-use test/mocking framework for developing Cloud applications.
