@@ -27,6 +27,9 @@ const action = (cmd, first, second, command) => {
     case 'call':
       call(first);
       break;
+    case 'describe':
+      describe(first);
+      break;
     case 'list':
       list();
       break;
@@ -72,6 +75,22 @@ const call = functionName => {
     const dockerId = config.get('function');
     exec(
       `docker exec ${dockerId} bash scripts/call.sh ${functionName}`,
+      (err, stdout, stderr) => {
+        if (err) console.log(chalk.bgRed(`failed to execute\n${stderr}`));
+        console.log(stdout);
+      }
+    );
+  } catch (err) {
+    console.log(chalk.blueBright.bgRed(err));
+  }
+};
+
+const describe = functionName => {
+  try {
+    const config = new Configstore(path.join(pkg.name, '.containerList'));
+    const dockerId = config.get('function');
+    exec(
+      `docker exec ${dockerId} bash scripts/describe.sh ${functionName}`,
       (err, stdout, stderr) => {
         if (err) console.log(chalk.bgRed(`failed to execute\n${stderr}`));
         console.log(stdout);
