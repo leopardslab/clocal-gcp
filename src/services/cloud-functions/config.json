@@ -1,5 +1,4 @@
 {
   "bindHost": "0.0.0.0",
-  "logFile": "/dev/null",
   "projectId": "dev-project"
 }

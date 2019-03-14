@@ -1,0 +1,1 @@
+functions logs "$1"
