@@ -14,7 +14,7 @@ fs.readdir(originpath, function (err, items) {
     const ServicesCmd = require('../src/services/cli-commands/' + items[i] + '/cmd');
     commandsArray = [ServicesCmd];
     program.version('1.0.0').description('Clocal GCP');
-
+    
     commandsArray.map(command => {
       commandNameList.push(command.commandName);
       if (command.option)
@@ -36,4 +36,7 @@ fs.readdir(originpath, function (err, items) {
   });
 
   program.parse(process.argv);
+  
+  if(process.argv.length < 3) 
+    program.help();
 });
