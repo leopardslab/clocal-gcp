@@ -1,0 +1,1 @@
+gcloud beta emulators pubsub start --data-dir=/var/pubsub --host-port=0.0.0.0:8085 --project dev-project
