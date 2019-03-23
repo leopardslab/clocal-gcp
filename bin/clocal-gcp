@@ -5,6 +5,8 @@
 let fs = require('fs');
 const program = require('commander');
 
+const pkg = require('../package.json');
+
 let commandsArray = [];
 let originpath = process.cwd() + "/src/services/cli-commands/";
 const commandNameList = [];
@@ -13,7 +15,7 @@ fs.readdir(originpath, function (err, items) {
   for (var i = 0; i < items.length; i++) {
     const ServicesCmd = require('../src/services/cli-commands/' + items[i] + '/cmd');
     commandsArray = [ServicesCmd];
-    program.version('1.0.0').description('Clocal GCP');
+    program.version(pkg.version).description(pkg.description);
     
     commandsArray.map(command => {
       commandNameList.push(command.commandName);
