@@ -1,0 +1,1 @@
+gcloud beta emulators firestore start --host-port=0.0.0.0:8086 --project=dev-project
