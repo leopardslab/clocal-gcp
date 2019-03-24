@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 
-const express = require('express');
+const express = require("express");
 
 class CloudLocal {
   constructor() {
@@ -10,7 +10,7 @@ class CloudLocal {
 
   start() {
     if (!this.port) {
-      throw new Error('Port is not assigned');
+      throw new Error("Port is not assigned");
     }
 
     return (this.server = this.app.listen(this.port));
