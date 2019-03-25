@@ -42,6 +42,22 @@ $ yarn start <command>
     **start clocal-gcp memcache emulator**
     * mem start
     * mem stop
+* ## clocal-gcp pubsub
+    **start clocal-gcp pubsub emulator**
+    * pubsub start
+    * pubsub stop
+* ## clocal-gcp datastore
+    **start clocal-gcp datastore emulator**
+    * datastore start
+    * datastore stop
+* ## clocal-gcp bigtable
+    **start clocal-gcp bigtable emulator**
+    * bigtable start
+    * bigtable stop
+* ## clocal-gcp firestore
+    **start clocal-gcp firestore emulator**
+    * firestore start
+    * firestore stop
 
 **In development replace clocal-gcp with 'npm start' or 'yarn start'**
 
