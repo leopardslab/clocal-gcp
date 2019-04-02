@@ -70,8 +70,10 @@ $ yarn start <command>
 
 _clocal-gcp_ spins up the following core Cloud APIs on your local machine:
 
-* **Cloud Functions** at http://localhost:7574
-* **Cloud Data Store** at http://localhost:7569
-* **Cloud CDN** at http://localhost:7581
-* **Cloud ENDPOINTS** at http://localhost:7567
-* **Cloud Storage** at http://localhost:7572
+* **Cloud Functions** at http://localhost:8000
+* **Cloud Storage** at http://localhost:8001
+* **Cloud MemoryStore** at http://localhost:7070
+* **Cloud PubSub** at http://localhost:8085
+* **Cloud DataStore** at http://localhost:8081
+* **Cloud FireStore** at http://localhost:8086
+* **Cloud BigTable** at http://localhost:8087

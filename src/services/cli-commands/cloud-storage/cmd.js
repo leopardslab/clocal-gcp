@@ -11,7 +11,7 @@ const path = require('path');
 const pkg = require('../../../../package.json');
 const common = require('../common/cmd');
 const dockerImage = `cloudlibz/clocal-gcp-storage:latest`;
-const defaultPort = 8000;
+const defaultPort = 8001;
 
 const action = (cmd, first, second) => {
   switch (cmd) {
