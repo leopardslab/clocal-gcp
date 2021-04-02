@@ -3,6 +3,7 @@
 'use strict';
 
 let fs = require('fs');
+const { exec } = require('child_process');
 const program = require('commander');
 const Configstore = require('configstore');
 const chalk = require("chalk");
@@ -44,12 +45,20 @@ fs.readdir(originpath, function (err, items) {
 
   program.command('status').action(()=>{
     const config = new Configstore(path.join(pkg.name, '.containerList'));
-    const continers = config.all;
+    const containers = config.all;
     
     console.log(chalk.green('Service Status\n'));
 
-    Object.keys(continers).forEach(element => {
-      console.log(chalk.blue(`Cloud ${element}`),`: ${getContainerDetails(continers[element])}`);
+    Object.keys(containers).forEach(element => {
+        exec(`docker continer inspect -f '{{.State.Running}}`,(err,stdout,stderr) => {
+          if(err){
+               return console.log(chalk.blue(`Cloud ${element} : `),'Error while executing');
+          }
+          if(stdout.trim()){
+               return console.log(chalk.blue(`Cloud ${element} : `),'Container is runnig');
+          }
+          return console.log(chalk.blue(`Cloud ${element} : `),'Container is not runnig'); 
+      });
     });
   });
 
