@@ -52,7 +52,7 @@ fs.readdir(originpath, function (err, items) {
     Object.keys(containers).forEach(element => {
         exec(`docker container inspect -f '{{.State.Running}}' ${containers[element]}`,(err,stdout,stderr) => {
           if(err){
-               return console.log(chalk.blue(`Cloud ${element} : `),'Error while executing');
+               return console.log(chalk.blue(`Cloud ${element} : `),'Container is not runnig');
           }
           if(stdout.trim()){
                return console.log(chalk.blue(`Cloud ${element} : `),'Container is runnig');
