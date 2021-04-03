@@ -42,6 +42,30 @@ fs.readdir(originpath, function (err, items) {
     console.log(commandNames);
   });
 
+  program.command('status').action(()=>{
+    const config = new Configstore(path.join(pkg.name, '.containerList'));
+    const containers = config.all;
+    
+    console.log(chalk.green('Service Status\n'));
+
+    Object.keys(containers).forEach(element => {
+        exec(`docker container inspect -f '{{.State.Running}}' ${containers[element]}`,(err,stdout,stderr) => {
+          if(err){
+               return console.log(chalk.blue(`Cloud ${element} : `),'Container is not running');
+          }
+          if(stdout.trim()){
+              exec(`docker port ${containers[element]} | fgrep -w 0.0.0.0 | cut -d ':' -f2`, (err,stdout,stderr) =>{
+                if(err){
+                  return console.log(chalk.blue(`Cloud ${element} : `),chalk.bgReg(`Container is running but failed to execute\n ${stderr}`));
+                }
+                return console.log(chalk.blue(`Cloud ${element} : `),`Running at http://localhost:${stdout}`);
+              });
+          }
+          return console.log(chalk.blue(`Cloud ${element} : `),'Stopped'); 
+      });
+    });
+  });
+
   program.parse(process.argv);
   
   if(process.argv.length < 3) 
