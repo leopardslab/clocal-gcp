@@ -54,7 +54,7 @@ fs.readdir(originpath, function (err, items) {
                return console.log(chalk.blue(`Cloud ${element} : `),'Container is not running');
           }
           if(stdout.trim()){
-              exec(`docker port ${containers[element]} | fgrep -w 0.0.0.0 | cut -d ':' -f2`, (err,stdout,stderr) =>{
+              return exec(`docker port ${containers[element]} | fgrep -w 0.0.0.0 | cut -d ':' -f2`, (err,stdout,stderr) =>{
                 if(err){
                   return console.log(chalk.blue(`Cloud ${element} : `),chalk.bgReg(`Container is running but failed to execute\n ${stderr}`));
                 }
