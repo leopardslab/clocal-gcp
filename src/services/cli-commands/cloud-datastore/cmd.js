@@ -19,7 +19,7 @@ const action = (cmd, first, second, command) => {
       break;
     case 'stop':
       stop()
-      break;
+      break;  
     default:
       console.log(`command invalid ${cmd} ${first} ${second}`);
   }

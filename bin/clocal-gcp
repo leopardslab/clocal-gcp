@@ -10,6 +10,7 @@ const chalk = require("chalk");
 
 const path = require('path');
 const pkg = require('../package.json');
+const removeContainer = require('../src/services/cli-commands/common/removeContainer');
 
 let commandsArray = [];
 let originpath = process.cwd() + "/src/services/cli-commands/";
@@ -46,7 +47,7 @@ fs.readdir(originpath, function (err, items) {
     const config = new Configstore(path.join(pkg.name, '.containerList'));
     const containers = config.all;
     
-    console.log(chalk.green('Service Status\n'));
+    console.log(chalk.bgGreen('Service Status\n'));
 
     Object.keys(containers).forEach(element => {
         exec(`docker container inspect -f '{{.State.Running}}' ${containers[element]}`,(err,stdout,stderr) => {
@@ -64,6 +65,27 @@ fs.readdir(originpath, function (err, items) {
           return console.log(chalk.blue(`Cloud ${element} : `),'Stopped'); 
       });
     });
+  });
+
+  program.command('stop').action(()=>{
+    const config = new Configstore(path.join(pkg.name, '.containerList'));
+    console.log(config);
+    const containers = config.all;
+
+    console.log(chalk.bgGreen('Stopping services...\n'));
+
+    Object.keys(containers).forEach(element=>{
+      exec(`docker rm -f ${containers[element]}`,(err,stdout,stderr)=>{
+        if(err){
+          console.log(chalk.blue(`Stopping cloud ${element} : `),chalk.red(`Something happend while stopping. Container ID - ${containers[element]}`));
+          return console.log(stderr);
+        }
+        config.delete(element);
+        console.log(chalk.blue(`Stopping cloud ${element} : `),chalk.green(`Stopped`));
+      });
+    
+    });
+
   });
 
   program.parse(process.argv);
