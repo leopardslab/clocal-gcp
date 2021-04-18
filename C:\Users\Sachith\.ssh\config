@@ -1,4 +1,0 @@
-Host 34.105.21.205
-  HostName 34.105.21.205
-  IdentityFile ~/.ssh
-  User sachith
