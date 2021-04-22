@@ -11,7 +11,7 @@ Currently features are under development.
 ## 🚀 Install
 
 ```
-$ git clone https://github.com/cloudlibz/clocal-gcp.git
+$ git clone https://github.com/leopardslab/clocal-gcp.git
 
 $ cd clocal-gcp
 

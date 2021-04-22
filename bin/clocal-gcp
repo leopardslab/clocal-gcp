@@ -3,9 +3,14 @@
 'use strict';
 
 let fs = require('fs');
+const { exec } = require('child_process');
 const program = require('commander');
+const Configstore = require('configstore');
+const chalk = require("chalk");
 
+const path = require('path');
 const pkg = require('../package.json');
+const removeContainer = require('../src/services/cli-commands/common/removeContainer');
 
 let commandsArray = [];
 let originpath = process.cwd() + "/src/services/cli-commands/";
@@ -36,6 +41,51 @@ fs.readdir(originpath, function (err, items) {
     }, '');
     console.log('\nSupported Emulators');
     console.log(commandNames);
+  });
+
+  program.command('status').action(()=>{
+    const config = new Configstore(path.join(pkg.name, '.containerList'));
+    const containers = config.all;
+    
+    console.log(chalk.bgGreen('Service Status\n'));
+
+    Object.keys(containers).forEach(element => {
+        exec(`docker container inspect -f '{{.State.Running}}' ${containers[element]}`,(err,stdout,stderr) => {
+          if(err){
+               return console.log(chalk.blue(`Cloud ${element} : `),'Container is not running');
+          }
+          if(stdout.trim()){
+              return exec(`docker port ${containers[element]} | fgrep -w 0.0.0.0 | cut -d ':' -f2`, (err,stdout,stderr) =>{
+                if(err){
+                  return console.log(chalk.blue(`Cloud ${element} : `),chalk.bgReg(`Container is running but failed to execute\n ${stderr}`));
+                }
+                return console.log(chalk.blue(`Cloud ${element} : `),`Running at http://localhost:${stdout}`);
+              });
+          }
+          return console.log(chalk.blue(`Cloud ${element} : `),'Stopped'); 
+      });
+    });
+  });
+
+  program.command('stop').action(()=>{
+    const config = new Configstore(path.join(pkg.name, '.containerList'));
+    console.log(config);
+    const containers = config.all;
+
+    console.log(chalk.bgGreen('Stopping services...\n'));
+
+    Object.keys(containers).forEach(element=>{
+      exec(`docker rm -f ${containers[element]}`,(err,stdout,stderr)=>{
+        if(err){
+          console.log(chalk.blue(`Stopping cloud ${element} : `),chalk.red(`Something happend while stopping. Container ID - ${containers[element]}`));
+          return console.log(stderr);
+        }
+        config.delete(element);
+        console.log(chalk.blue(`Stopping cloud ${element} : `),chalk.green(`Stopped`));
+      });
+    
+    });
+
   });
 
   program.parse(process.argv);

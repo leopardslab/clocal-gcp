@@ -10,6 +10,7 @@ const Configstore = require('configstore');
 const path = require('path');
 const pkg = require('../../../../package.json');
 const common = require('../common/cmd');
+const removeContainer = require('../common/removeContainer');
 const dockerImage = `cloudlibz/clocal-gcp-storage:latest`;
 const defaultPort = 8001;
 
@@ -187,8 +188,12 @@ const start = () => {
     exec(
       `docker run -d -p ${defaultPort}:8080 ${dockerImage}`,
       (err, stdout, stderr) => {
-        if (err) console.log(chalk.bgRed(`failed to start\n${stderr}`));
         config.set('storage', stdout.trim());
+        const dockerId = config.get('storage');
+        if (err){
+          removeContainer(dockerId);
+          return console.log(chalk.bgRed(`failed to start\n${stderr}`));
+        }
         console.log(
           chalk.green.bgWhiteBright(
             `started gcp storage. Listening on ${defaultPort}`

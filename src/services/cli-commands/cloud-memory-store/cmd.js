@@ -10,6 +10,7 @@ const Configstore = require('configstore');
 const path = require('path');
 const pkg = require('../../../../package.json');
 const common = require('../common/cmd');
+const removeContainer = require('../common/removeContainer');
 const dockerImage = `cloudlibz/clocal-gcp-memory-store:latest`;
 const defaultPort = 7070;
 
@@ -35,8 +36,12 @@ const start = () => {
     exec(
       `docker run -d -p ${defaultPort}:7070 ${dockerImage}`,
       (err, stdout, stderr) => {
-        if (err) console.log(chalk.bgRed(`failed to start\n${stderr}`));
         config.set('memorystore', stdout.trim());
+        const dockerId = config.get('memorystore');
+        if (err){
+          removeContainer(dockerId);
+          return console.log(chalk.bgRed(`failed to start\n${stderr}`));
+        }
         console.log(
           chalk.green.bgWhiteBright(
             `gcp memory store started. Listening on ${defaultPort}`

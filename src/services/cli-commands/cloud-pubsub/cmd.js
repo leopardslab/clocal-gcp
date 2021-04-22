@@ -8,6 +8,7 @@ const Configstore = require('configstore');
 const path = require('path');
 const pkg = require('../../../../package.json');
 const common = require('../common/cmd');
+const removeContainer = require('../common/removeContainer');
 const dockerImage = `cloudlibz/clocal-gcp-pubsub:latest`;
 const defaultPort = 8085;
 
@@ -31,13 +32,19 @@ const start = () => {
     const config = new Configstore(path.join(pkg.name, '.containerList'));
 
     exec(`docker run -p 8085:8085 -t -d ${dockerImage}`, (err, stdout, stderr) => {
-      if (err) console.log(chalk.bgRed(`failed to start\n${stderr}`));
       config.set('pubsub', stdout.trim());
       const dockerId = config.get('pubsub');
+      if (err){
+        removeContainer(dockerId);
+        return console.log(chalk.bgRed(`failed to start\n${stderr}`));
+      }
       exec(
         `docker exec -t -d ${dockerId} bash scripts/start.sh`,
         (err, stdout, stderr) => {
-          if (err) console.log(chalk.bgRed(`failed to execute\n${stderr}`));
+          if (err){
+            removeContainer(dockerId);
+            return console.log(chalk.bgRed(`failed to execute\n${stderr}`));
+          }
           console.log(stdout);
           if (!err) console.log(chalk.green.bgWhiteBright(`gcp pubsub started ...`));
         }
